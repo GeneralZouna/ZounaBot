@@ -1,21 +1,19 @@
 from random import randint
 
-def Minesweeper(size_X = 15, size_Y = 10, mines = 10):
-    Discord_dictionary = [':zero:',':one:',':two:',':three:',':four:',':five:',':six:',':seven:',':eight:',':nine:']
+def Minesweeper(size_X = 10, size_Y = 10, mines = 15):
     
+    Discord_dictionary = [':zero:',':one:',':two:',':three:',':four:',':five:',':six:',':seven:',':eight:',':nine:']
     EmptySign = "||:zero:||"
     Mine = "||:bomb:||"
+    
     Grid = []
-
-    if size_X * size_Y < mines * 4:
-        mines = (size_X * size_Y) /4
-
-    if size_X * size_Y > mines * 7:
-         mines = (size_X * size_Y) /6
+    
+    if size_X * size_Y < mines:
+        mines = size_X * size_Y
     
     #Seting mines
     MinesList = []
-    mi = 1
+    mi = 0
     while mi <= mines:
         MineList_a = [randint(0,size_Y-1), randint(0,size_X-1)]
         if not MineList_a in MinesList:
@@ -26,7 +24,6 @@ def Minesweeper(size_X = 15, size_Y = 10, mines = 10):
     #Field
     for Y in range(size_Y):
         row = []
-        #print(MinesList)
         for X in range(size_X):
             number = 0
             for XB in range(-1,2):
@@ -44,12 +41,6 @@ def Minesweeper(size_X = 15, size_Y = 10, mines = 10):
                 row.append("||{0}||".format(Discord_dictionary[number]))
                 
         Grid.append(row)
-
-    
-
-    
-    
-            
 
     #Printout
     Line = "Size: {0} x {1} \nMines: {2}\n".format(size_X,size_Y,len(MinesList))
