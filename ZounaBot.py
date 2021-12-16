@@ -66,6 +66,23 @@ async def on_message(message):
                 embed = discord.Embed(url=neko_url,title = f"Neko")
                 embed.set_image(url = neko_url)
                 await message.channel.send(embed=embed)
+        
+        
+        #classical game of minesweeper
+        elif command == "minesweeper":
+            if len(args) == 1:
+                await message.channel.send(Minesweeper.Minesweeper())
+            elif len(args) == 4:
+                try:
+                    await message.channel.send(Minesweeper.Minesweeper(int(args[1]),int(args[2]),int(args[3])))
+                except Exception as e:
+                    print (e)
+                    await message.channel.send("There is an error with command, try again.")
+            else:
+                await message.channel.send("There is an error with command, try again.")
+                
+                
+                
     else:
         #update balance
         #update user info
