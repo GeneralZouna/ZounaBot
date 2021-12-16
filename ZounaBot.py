@@ -1,9 +1,5 @@
 import discord
-import eight_ball
-import Economy
-import Minesweeper
-import dice
-import neko
+from Commands import *
 
 prefix = "!"
 TOKEN = "<token goes here>"
