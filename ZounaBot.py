@@ -1,4 +1,9 @@
 import discord
+import eight_ball
+import Economy
+import Minesweeper
+import dice
+import neko
 
 prefix = "!"
 TOKEN = "<token goes here>"
@@ -11,9 +16,56 @@ async def on_ready():
     
 @client.event
 async def on_message(message):
-    if message.startswith(prefix):
+    if message.content.startswith(prefix):
         args = message.content.split(" ")
-        #command manager
+        command = args[0]
+        command = command[len(prefix):]
+        
+        #8ball command
+        if command.lower() == "8ball":
+            response = f">>> {message.content[len(prefix)+len('8ball'):]}\n"
+            response += eight_ball._8ball()
+            await message.channel.send(response)
+        
+        #neko command group
+        #TODO: add price
+        elif command.lower() == "neko":
+            if len(args) > 1:
+            
+                if args[1].lower() in ["nsfw","lewd"]:
+                    if len(args) == 3:
+                        try:
+                            for i in range(int(args[2])):
+                                neko_url = neko.get_neko(True)
+                                embed = discord.Embed(url=neko_url,title = f"Lewd neko {i+1}/{args[2]}")
+                                embed.set_image(url = neko_url)
+                                await message.channel.send(embed=embed)
+                        except Exception as e:
+                            print(e)
+                            await message.channel.send("There is an error with command try again")
+                    else:
+                        if len(args) == 2:
+                            neko_url = neko.get_neko(True)
+                            embed = discord.Embed(url=neko_url,title = f"Lewd neko")
+                            embed.set_image(url = neko_url)
+                            await message.channel.send(embed=embed)
+                else:
+                    if len(args) == 2:
+                        try:
+                            for i in range(int(args[1])):
+                                neko_url = neko.get_neko(False)
+                                embed = discord.Embed(url=neko_url,title = f"Neko {i+1}/{args[1]}")
+                                embed.set_image(url = neko_url)
+                                await message.channel.send(embed=embed)
+                        except Exception as e:
+                            print(e)
+                            await message.channel.send("There is an error with command try again")
+                    
+            else:
+                neko_url = neko.get_neko(False)
+                embed = discord.Embed(url=neko_url,title = f"Neko")
+                embed.set_image(url = neko_url)
+                await message.channel.send(embed=embed)
     else:
         #update balance
         #update user info
